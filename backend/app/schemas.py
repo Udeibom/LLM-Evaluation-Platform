@@ -66,3 +66,14 @@ class ExperimentMetrics(BaseModel):
     num_samples: int
     mean_score: float
     std_dev: float
+
+
+class ComparisonResponse(BaseModel):
+    experiment_a: UUID
+    experiment_b: UUID
+    total_prompts: int
+    wins_a: int
+    wins_b: int
+    ties: int
+    win_rate_a: float
+    win_rate_b: float
