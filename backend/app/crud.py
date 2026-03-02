@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
+from datetime import datetime
 from app import models, schemas
+
 
 # -------- Test Suites --------
 
@@ -43,11 +45,13 @@ def get_prompts_by_suite(db: Session, suite_id):
 
 # -------- Experiments --------
 
-def create_experiment(db: Session, suite_id, model_name):
+def create_experiment(db: Session, suite_id, model_name, metadata=None):
     exp = models.Experiment(
         test_suite_id=suite_id,
         model_name=model_name,
-        status="running"
+        model_metadata=metadata,
+        status="running",
+        started_at=datetime.utcnow()
     )
     db.add(exp)
     db.commit()
@@ -55,8 +59,14 @@ def create_experiment(db: Session, suite_id, model_name):
     return exp
 
 
-def update_experiment_status(db: Session, exp, status):
-    exp.status = status
+def complete_experiment(db: Session, exp):
+    exp.completed_at = datetime.utcnow()
+
+    duration = exp.completed_at - exp.started_at
+    exp.duration_ms = int(duration.total_seconds() * 1000)
+
+    exp.status = "completed"
+
     db.commit()
     db.refresh(exp)
     return exp

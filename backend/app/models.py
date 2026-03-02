@@ -33,10 +33,21 @@ class Experiment(Base):
     __tablename__ = "experiments"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    run_id = Column(String, unique=True, index=True, default=lambda: str(uuid.uuid4()))
+
     test_suite_id = Column(UUID(as_uuid=True), ForeignKey("test_suites.id"))
     model_name = Column(String, nullable=False)
-    parameters = Column(JSON)
+
+    model_metadata = Column(JSON)
+
     status = Column(String, default="pending")
+
+    started_at = Column(DateTime)
+    completed_at = Column(DateTime)
+
+    duration_ms = Column(Integer)
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     outputs = relationship("Output", back_populates="experiment")

@@ -9,6 +9,7 @@ class TestSuiteCreate(BaseModel):
     name: str
     description: Optional[str] = None
 
+
 class TestSuiteResponse(BaseModel):
     id: UUID
     name: str
@@ -25,6 +26,7 @@ class PromptCreate(BaseModel):
     input_text: str
     expected_output: Optional[str] = None
     metadata: Optional[dict] = None
+
 
 class PromptResponse(BaseModel):
     id: UUID
@@ -43,12 +45,16 @@ class ExperimentCreate(BaseModel):
     test_suite_id: UUID
     model_name: str
 
+
 class ExperimentResponse(BaseModel):
     id: UUID
+    run_id: str
     test_suite_id: UUID
     model_name: str
     status: str
-    created_at: datetime
+    started_at: datetime | None
+    completed_at: datetime | None
+    duration_ms: int | None
 
     class Config:
         from_attributes = True
