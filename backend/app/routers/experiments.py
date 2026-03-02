@@ -8,7 +8,8 @@ from app import schemas, crud, models
 from app.services.model_runner import run_experiment
 from app.services.judge import evaluate_outputs
 from app.services.metrics import compute_experiment_metrics
-from app.services.comparison import compare_experiments  # NEW IMPORT
+from app.services.comparison import compare_experiments
+from app.services.statistics import paired_t_test  # NEW IMPORT
 
 router = APIRouter(prefix="/experiments", tags=["Experiments"])
 
@@ -68,6 +69,21 @@ def compare(
     db: Session = Depends(get_db)
 ):
     result = compare_experiments(db, experiment_a, experiment_b)
+
+    return {
+        "experiment_a": experiment_a,
+        "experiment_b": experiment_b,
+        **result
+    }
+
+
+@router.get("/compare/statistics", response_model=schemas.StatisticalTestResponse)
+def compare_stats(
+    experiment_a: UUID,
+    experiment_b: UUID,
+    db: Session = Depends(get_db)
+):
+    result = paired_t_test(db, experiment_a, experiment_b)
 
     return {
         "experiment_a": experiment_a,

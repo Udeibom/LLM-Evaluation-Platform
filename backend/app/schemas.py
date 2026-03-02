@@ -77,3 +77,10 @@ class ComparisonResponse(BaseModel):
     ties: int
     win_rate_a: float
     win_rate_b: float
+
+class StatisticalTestResponse(BaseModel):
+    experiment_a: UUID
+    experiment_b: UUID
+    t_statistic: float
+    p_value: float
+    significant: bool
