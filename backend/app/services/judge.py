@@ -1,40 +1,26 @@
-import requests
 import json
-from app.config import HF_API_KEY, HF_JUDGE_MODEL
+from groq import Groq
 from sqlalchemy.orm import Session
+
+from app.config import GROQ_API_KEY, GROQ_JUDGE_MODEL
 from app import models
 
-HF_URL = f"https://router.huggingface.co/hf-inference/models/{HF_JUDGE_MODEL}"
 
-headers = {
-    "Authorization": f"Bearer {HF_API_KEY}",
-    "Content-Type": "application/json"
-}
+# Initialize Groq client
+client = Groq(api_key=GROQ_API_KEY)
 
 
-
-def build_prompt(question, answer, ground_truth=None):
+def build_prompt(question: str, answer: str, ground_truth: str | None = None) -> str:
+    """
+    Builds the evaluation prompt for the judge model.
+    """
     return f"""
 You are an AI evaluator.
 
-Your job is to evaluate the factual correctness of a model response.
-
 Return ONLY valid JSON.
 
-Evaluation criteria:
-
-- score (0-5):
-  0 = completely incorrect
-  1 = mostly incorrect
-  2 = partially correct
-  3 = mostly correct
-  4 = correct with minor issues
-  5 = fully correct
-
-- hallucination:
-  true if the answer contains fabricated facts
-
-Evaluate:
+Score 0-5.
+Mark hallucination true if fabricated facts exist.
 
 QUESTION:
 {question}
@@ -45,7 +31,7 @@ MODEL ANSWER:
 GROUND TRUTH:
 {ground_truth}
 
-Return JSON:
+Return:
 
 {{
   "score": number,
@@ -55,51 +41,59 @@ Return JSON:
 """
 
 
-
-def call_judge(prompt):
-    payload = {"inputs": prompt, "parameters": {"max_new_tokens": 200}}
-
-    response = requests.post(HF_URL, headers=headers, json=payload)
-
-    if response.status_code != 200:
-        return json.dumps({
-            "score": 0,
-            "hallucination": True,
-            "explanation": f"Judge API error: {response.text}"
-        })
-
+def call_judge(prompt: str) -> str:
+    """
+    Sends the evaluation prompt to the judge model.
+    Returns raw text output.
+    """
     try:
-        result = response.json()
-    except ValueError:
-        raise Exception(
-            f"Invalid JSON from HF: {response.text}"
+        response = client.chat.completions.create(
+            model=GROQ_JUDGE_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+            max_tokens=200,
         )
 
-    if isinstance(result, list) and "generated_text" in result[0]:
-        return result[0]["generated_text"]
+        return response.choices[0].message.content
 
-    return str(result)
+    except Exception as e:
+        return json.dumps(
+            {
+                "score": 0,
+                "hallucination": True,
+                "explanation": f"Judge API error: {str(e)}",
+            }
+        )
 
 
-
-def parse_judge_output(text):
+def parse_judge_output(text: str) -> dict:
+    """
+    Attempts to extract and parse JSON from the judge output.
+    Falls back to a default failure response if parsing fails.
+    """
     try:
         start = text.index("{")
         end = text.rindex("}") + 1
         return json.loads(text[start:end])
+
     except Exception:
         return {
             "score": 0,
             "hallucination": True,
-            "explanation": "Failed to parse judge output"
+            "explanation": "Failed to parse judge output",
         }
 
 
-def evaluate_outputs(db: Session, experiment_id):
-
-    outputs = db.query(models.Output).filter(
-        models.Output.experiment_id == experiment_id
-    ).all()
+def evaluate_outputs(db: Session, experiment_id: int) -> None:
+    """
+    Evaluates all outputs for a given experiment
+    and stores evaluation results in the database.
+    """
+    outputs = (
+        db.query(models.Output)
+        .filter(models.Output.experiment_id == experiment_id)
+        .all()
+    )
 
     for output in outputs:
         question = output.prompt.input_text
@@ -107,14 +101,14 @@ def evaluate_outputs(db: Session, experiment_id):
 
         prompt = build_prompt(question, output.output_text, ground_truth)
 
-        raw = call_judge(prompt)
-        parsed = parse_judge_output(raw)
+        raw_response = call_judge(prompt)
+        parsed = parse_judge_output(raw_response)
 
         evaluation = models.Evaluation(
             output_id=output.id,
             score=parsed["score"],
             hallucination=parsed["hallucination"],
-            explanation=parsed["explanation"]
+            explanation=parsed["explanation"],
         )
 
         db.add(evaluation)

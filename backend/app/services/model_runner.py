@@ -1,60 +1,53 @@
-import requests
 import time
+from groq import Groq
 from sqlalchemy.orm import Session
-from app.config import HF_API_KEY, HF_GENERATION_MODEL
+
+from app.config import GROQ_API_KEY, GROQ_GENERATION_MODEL
 from app import models
 
 
-HF_URL = f"https://router.huggingface.co/hf-inference/models/{HF_GENERATION_MODEL}"
-
-headers = {
-    "Authorization": f"Bearer {HF_API_KEY}",
-    "Content-Type": "application/json"
-}
+# Initialize Groq client
+client = Groq(api_key=GROQ_API_KEY)
 
 
-def call_model(prompt: str):
-    payload = {
-        "inputs": prompt,
-        "parameters": {
-            "max_new_tokens": 200,
-            "return_full_text": False
-        }
-    }
-
+def call_model(prompt: str) -> tuple[str, int]:
+    """
+    Sends a prompt to the Groq model and returns:
+    - model response text
+    - latency in milliseconds
+    """
     start = time.time()
 
     try:
-        response = requests.post(HF_URL, headers=headers, json=payload)
+        response = client.chat.completions.create(
+            model=GROQ_GENERATION_MODEL,
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.2,
+            max_tokens=200,
+        )
+
         latency = int((time.time() - start) * 1000)
+        output_text = response.choices[0].message.content
 
-        # Handle non-200 responses
-        if response.status_code != 200:
-            return f"MODEL_ERROR: {response.text}", latency
-
-        result = response.json()
-
-        # Standard HF text generation response format
-        if isinstance(result, list) and len(result) > 0:
-            if "generated_text" in result[0]:
-                return result[0]["generated_text"], latency
-
-        # HF error response format
-        if isinstance(result, dict) and "error" in result:
-            return f"MODEL_ERROR: {result['error']}", latency
-
-        # Fallback if response shape changes
-        return str(result), latency
+        return output_text, latency
 
     except Exception as e:
         latency = int((time.time() - start) * 1000)
-        return f"EXCEPTION: {str(e)}", latency
+        return f"MODEL_ERROR: {str(e)}", latency
 
 
-def run_experiment(db: Session, experiment: models.Experiment):
-    prompts = db.query(models.Prompt).filter(
-        models.Prompt.test_suite_id == experiment.test_suite_id
-    ).all()
+def run_experiment(db: Session, experiment: models.Experiment) -> None:
+    """
+    Runs the model against all prompts in the experiment's test suite
+    and stores the outputs in the database.
+    """
+    prompts = (
+        db.query(models.Prompt)
+        .filter(models.Prompt.test_suite_id == experiment.test_suite_id)
+        .all()
+    )
 
     for prompt in prompts:
         output_text, latency = call_model(prompt.input_text)
@@ -63,7 +56,7 @@ def run_experiment(db: Session, experiment: models.Experiment):
             experiment_id=experiment.id,
             prompt_id=prompt.id,
             output_text=output_text,
-            latency_ms=latency
+            latency_ms=latency,
         )
 
         db.add(output)
