@@ -9,7 +9,8 @@ from app.services.model_runner import run_experiment
 from app.services.judge import evaluate_outputs
 from app.services.metrics import compute_experiment_metrics
 from app.services.comparison import compare_experiments
-from app.services.statistics import paired_t_test  # NEW IMPORT
+from app.services.statistics import paired_t_test
+from app.services.summary import get_experiment_summary
 
 router = APIRouter(prefix="/experiments", tags=["Experiments"])
 
@@ -89,4 +90,27 @@ def compare_stats(
         "experiment_a": experiment_a,
         "experiment_b": experiment_b,
         **result
+    }
+
+@router.get("/{experiment_id}/summary", response_model=schemas.ExperimentSummary)
+def experiment_summary(experiment_id: UUID, db: Session = Depends(get_db)):
+
+    experiment = db.query(models.Experiment).filter(
+        models.Experiment.id == experiment_id
+    ).first()
+
+    if not experiment:
+        raise HTTPException(status_code=404, detail="Experiment not found")
+
+    metrics = get_experiment_summary(db, experiment_id)
+
+    return {
+        "experiment_id": experiment.id,
+        "run_id": experiment.run_id,
+        "model_name": experiment.model_name,
+        "status": experiment.status,
+        "started_at": experiment.started_at,
+        "completed_at": experiment.completed_at,
+        "duration_ms": experiment.duration_ms,
+        **metrics
     }

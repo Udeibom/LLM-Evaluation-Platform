@@ -84,3 +84,22 @@ class StatisticalTestResponse(BaseModel):
     t_statistic: float
     p_value: float
     significant: bool
+
+class ExperimentSummary(BaseModel):
+    experiment_id: UUID
+    run_id: str
+    model_name: str
+    status: str
+
+    num_samples: int
+    mean_score: float
+    std_dev: float
+    hallucination_rate: float
+
+    avg_latency: float
+    max_latency: int
+    min_latency: int
+
+    started_at: datetime | None
+    completed_at: datetime | None
+    duration_ms: int | None
