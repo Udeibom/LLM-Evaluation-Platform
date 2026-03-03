@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.db import Base
 
+
 class TestSuite(Base):
     __tablename__ = "test_suites"
 
@@ -14,6 +15,7 @@ class TestSuite(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     prompts = relationship("Prompt", back_populates="test_suite")
+
 
 class Prompt(Base):
     __tablename__ = "prompts"
@@ -26,15 +28,21 @@ class Prompt(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     test_suite = relationship("TestSuite", back_populates="prompts")
-
     outputs = relationship("Output", back_populates="prompt")
+
 
 class Experiment(Base):
     __tablename__ = "experiments"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
-    run_id = Column(String, unique=True, index=True, default=lambda: str(uuid.uuid4()))
+    run_id = Column(
+        String,
+        unique=True,
+        index=True,
+        nullable=False,
+        default=lambda: str(uuid.uuid4())
+    )
 
     test_suite_id = Column(UUID(as_uuid=True), ForeignKey("test_suites.id"))
     model_name = Column(String, nullable=False)
@@ -52,6 +60,7 @@ class Experiment(Base):
 
     outputs = relationship("Output", back_populates="experiment")
 
+
 class Output(Base):
     __tablename__ = "outputs"
 
@@ -63,9 +72,7 @@ class Output(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     experiment = relationship("Experiment", back_populates="outputs")
-
     prompt = relationship("Prompt", back_populates="outputs")
-
     evaluations = relationship("Evaluation", back_populates="output")
 
 
