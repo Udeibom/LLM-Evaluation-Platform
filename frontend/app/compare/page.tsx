@@ -1,130 +1,110 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  compareExperiments,
-  compareStatistics,
-  getExperiments,
-} from "@/lib/api";
 
-interface Experiment {
+type TestSuite = {
   id: string;
-  model_name: string;
-}
+  name: string;
+};
+
+const AVAILABLE_MODELS = [
+  "llama-3.3-70b-versatile",
+  "google/flan-t5-base",
+  "mistralai/Mistral-7B-Instruct-v0.2"
+];
 
 export default function ComparePage() {
-  const [experiments, setExperiments] = useState<Experiment[]>([]);
-  const [expA, setExpA] = useState<string>("");
-  const [expB, setExpB] = useState<string>("");
-
-  const [comparison, setComparison] = useState<any>(null);
-  const [stats, setStats] = useState<any>(null);
+  const [testSuites, setTestSuites] = useState<TestSuite[]>([]);
+  const [selectedSuite, setSelectedSuite] = useState("");
+  const [modelA, setModelA] = useState("");
+  const [modelB, setModelB] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<any>(null);
 
   useEffect(() => {
-    async function loadExperiments() {
-      const data = await getExperiments();
-      setExperiments(data);
-    }
-    loadExperiments();
+    fetch("http://localhost:8000/test-suites/")
+      .then(res => res.json())
+      .then(data => setTestSuites(data));
   }, []);
 
-  async function handleCompare() {
-    if (!expA || !expB) return;
+  async function runComparison() {
+    if (!selectedSuite || !modelA || !modelB) {
+      alert("Select test suite and two models.");
+      return;
+    }
 
-    const result = await compareExperiments(expA, expB);
-    const statResult = await compareStatistics(expA, expB);
+    setLoading(true);
+    setResult(null);
 
-    setComparison(result);
-    setStats(statResult);
+    const res = await fetch("http://localhost:8000/comparisons/run", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        test_suite_id: selectedSuite,
+        model_a: modelA,
+        model_b: modelB
+      })
+    });
+
+    const data = await res.json();
+    setResult(data);
+    setLoading(false);
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">
-        Compare Experiments
-      </h1>
+    <div style={{ padding: 40 }}>
+      <h1>Run Model Comparison</h1>
 
-      {/* Selectors */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <select
-          value={expA}
-          onChange={(e) => setExpA(e.target.value)}
-          className="border p-2 rounded"
-        >
-          <option value="">Select Experiment A</option>
-          {experiments.map((exp) => (
-            <option key={exp.id} value={exp.id}>
-              {exp.model_name} ({exp.id.slice(0, 6)})
-            </option>
-          ))}
-        </select>
+      <h3>Select Test Suite</h3>
+      <select
+        value={selectedSuite}
+        onChange={(e) => setSelectedSuite(e.target.value)}
+      >
+        <option value="">-- Select --</option>
+        {testSuites.map(suite => (
+          <option key={suite.id} value={suite.id}>
+            {suite.name}
+          </option>
+        ))}
+      </select>
 
-        <select
-          value={expB}
-          onChange={(e) => setExpB(e.target.value)}
-          className="border p-2 rounded"
-        >
-          <option value="">Select Experiment B</option>
-          {experiments.map((exp) => (
-            <option key={exp.id} value={exp.id}>
-              {exp.model_name} ({exp.id.slice(0, 6)})
-            </option>
-          ))}
-        </select>
+      <h3 style={{ marginTop: 20 }}>Model A</h3>
+      <select value={modelA} onChange={(e) => setModelA(e.target.value)}>
+        <option value="">-- Select --</option>
+        {AVAILABLE_MODELS.map(model => (
+          <option key={model} value={model}>
+            {model}
+          </option>
+        ))}
+      </select>
+
+      <h3 style={{ marginTop: 20 }}>Model B</h3>
+      <select value={modelB} onChange={(e) => setModelB(e.target.value)}>
+        <option value="">-- Select --</option>
+        {AVAILABLE_MODELS.map(model => (
+          <option key={model} value={model}>
+            {model}
+          </option>
+        ))}
+      </select>
+
+      <div style={{ marginTop: 30 }}>
+        <button onClick={runComparison} disabled={loading}>
+          {loading ? "Running..." : "Run Comparison"}
+        </button>
       </div>
 
-      <button
-        onClick={handleCompare}
-        className="bg-black text-white px-4 py-2 rounded"
-      >
-        Compare
-      </button>
-
-      {/* Results */}
-      {comparison && (
-        <div className="mt-8 border rounded p-6 bg-white shadow">
-          <h2 className="text-xl font-semibold mb-4">
-            Comparison Results
-          </h2>
-
-          <p>Total Prompts: {comparison.total_prompts}</p>
-          <p>Wins A: {comparison.wins_a}</p>
-          <p>Wins B: {comparison.wins_b}</p>
-          <p>Ties: {comparison.ties}</p>
-
-          <div className="mt-4">
-            <p>
-              Win Rate A:{" "}
-              {(comparison.win_rate_a * 100).toFixed(1)}%
-            </p>
-            <p>
-              Win Rate B:{" "}
-              {(comparison.win_rate_b * 100).toFixed(1)}%
-            </p>
-          </div>
-        </div>
-      )}
-
-      {stats && (
-        <div className="mt-6 border rounded p-6 bg-white shadow">
-          <h2 className="text-xl font-semibold mb-4">
-            Statistical Test
-          </h2>
-
-          <p>T-Statistic: {stats.t_statistic.toFixed(3)}</p>
-          <p>P-Value: {stats.p_value.toFixed(5)}</p>
-
-          <p
-            className={`mt-2 font-semibold ${
-              stats.significant
-                ? "text-green-600"
-                : "text-red-600"
-            }`}
-          >
-            {stats.significant
-              ? "Statistically Significant Difference"
-              : "No Significant Difference"}
-          </p>
+      {result && (
+        <div style={{ marginTop: 40 }}>
+          <h2>Results</h2>
+          <p>Total Prompts: {result.total_prompts}</p>
+          <p>Wins A: {result.wins_a}</p>
+          <p>Wins B: {result.wins_b}</p>
+          <p>Ties: {result.ties}</p>
+          <p>Win Rate A: {(result.win_rate_a * 100).toFixed(1)}%</p>
+          <p>Win Rate B: {(result.win_rate_b * 100).toFixed(1)}%</p>
         </div>
       )}
     </div>

@@ -46,6 +46,11 @@ class ExperimentCreate(BaseModel):
     model_name: str
 
 
+class RunComparisonRequest(BaseModel):
+    test_suite_id: UUID
+    model_a: str
+    model_b: str
+
 class ExperimentResponse(BaseModel):
     id: UUID
     run_id: str

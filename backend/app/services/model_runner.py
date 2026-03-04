@@ -10,9 +10,9 @@ from app import models
 client = Groq(api_key=GROQ_API_KEY)
 
 
-def call_model(prompt: str) -> tuple[str, int]:
+def call_model(model_name: str, prompt: str) -> tuple[str, int]:
     """
-    Sends a prompt to the Groq model and returns:
+    Sends a prompt to the specified Groq model and returns:
     - model response text
     - latency in milliseconds
     """
@@ -20,7 +20,7 @@ def call_model(prompt: str) -> tuple[str, int]:
 
     try:
         response = client.chat.completions.create(
-            model=GROQ_GENERATION_MODEL,
+            model=model_name,
             messages=[
                 {"role": "user", "content": prompt}
             ],
@@ -50,7 +50,10 @@ def run_experiment(db: Session, experiment: models.Experiment) -> None:
     )
 
     for prompt in prompts:
-        output_text, latency = call_model(prompt.input_text)
+        output_text, latency = call_model(
+            experiment.model_name,
+            prompt.input_text
+        )
 
         output = models.Output(
             experiment_id=experiment.id,

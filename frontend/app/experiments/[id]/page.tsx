@@ -3,9 +3,11 @@ import { getExperimentSummary } from "@/lib/api";
 export default async function ExperimentDetail({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const summary = await getExperimentSummary(params.id);
+  const { id } = await params;
+
+  const summary = await getExperimentSummary(id);
 
   return (
     <div className="p-6">
@@ -16,8 +18,14 @@ export default async function ExperimentDetail({
       <div className="grid grid-cols-2 gap-4">
         <Stat label="Mean Score" value={summary.mean_score} />
         <Stat label="Std Dev" value={summary.std_dev} />
-        <Stat label="Hallucination Rate" value={`${summary.hallucination_rate * 100}%`} />
-        <Stat label="Win Rate" value={`${summary.win_rate * 100}%`} />
+        <Stat
+          label="Hallucination Rate"
+          value={`${summary.hallucination_rate * 100}%`}
+        />
+        <Stat
+          label="Win Rate"
+          value={`${summary.win_rate * 100}%`}
+        />
       </div>
     </div>
   );
