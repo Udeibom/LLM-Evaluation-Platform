@@ -108,3 +108,10 @@ class ExperimentSummary(BaseModel):
     started_at: datetime | None
     completed_at: datetime | None
     duration_ms: int | None
+
+class ComparisonJobResponse(BaseModel):
+    id: UUID
+    status: str
+
+    class Config:
+        from_attributes = True

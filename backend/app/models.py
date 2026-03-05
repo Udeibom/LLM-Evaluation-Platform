@@ -87,3 +87,28 @@ class Evaluation(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     output = relationship("Output", back_populates="evaluations")
+
+
+class Comparison(Base):
+    __tablename__ = "comparisons"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    test_suite_id = Column(UUID(as_uuid=True), ForeignKey("test_suites.id"))
+
+    model_a = Column(String)
+    model_b = Column(String)
+
+    experiment_a_id = Column(UUID(as_uuid=True), ForeignKey("experiments.id"), nullable=True)
+    experiment_b_id = Column(UUID(as_uuid=True), ForeignKey("experiments.id"), nullable=True)
+
+    status = Column(String, default="running")
+
+    wins_a = Column(Integer)
+    wins_b = Column(Integer)
+    ties = Column(Integer)
+
+    win_rate_a = Column(Integer)
+    win_rate_b = Column(Integer)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
