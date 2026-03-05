@@ -13,6 +13,8 @@ const AVAILABLE_MODELS = [
   "mistralai/Mistral-7B-Instruct-v0.2"
 ];
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function ComparePage() {
   const [testSuites, setTestSuites] = useState<TestSuite[]>([]);
   const [selectedSuite, setSelectedSuite] = useState("");
@@ -22,9 +24,22 @@ export default function ComparePage() {
   const [result, setResult] = useState<any>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/test-suites/")
-      .then(res => res.json())
-      .then(data => setTestSuites(data));
+    async function loadSuites() {
+      try {
+        const res = await fetch(`${API_URL}/test-suites/`);
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch test suites");
+        }
+
+        const data = await res.json();
+        setTestSuites(data);
+      } catch (error) {
+        console.error("Error loading test suites:", error);
+      }
+    }
+
+    loadSuites();
   }, []);
 
   async function runComparison() {
@@ -33,24 +48,34 @@ export default function ComparePage() {
       return;
     }
 
-    setLoading(true);
-    setResult(null);
+    try {
+      setLoading(true);
+      setResult(null);
 
-    const res = await fetch("http://localhost:8000/comparisons/run", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        test_suite_id: selectedSuite,
-        model_a: modelA,
-        model_b: modelB
-      })
-    });
+      const res = await fetch(`${API_URL}/comparisons/run`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          test_suite_id: selectedSuite,
+          model_a: modelA,
+          model_b: modelB
+        })
+      });
 
-    const data = await res.json();
-    setResult(data);
-    setLoading(false);
+      if (!res.ok) {
+        throw new Error("Comparison failed");
+      }
+
+      const data = await res.json();
+      setResult(data);
+    } catch (error) {
+      console.error("Comparison error:", error);
+      alert("Failed to run comparison.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -63,7 +88,7 @@ export default function ComparePage() {
         onChange={(e) => setSelectedSuite(e.target.value)}
       >
         <option value="">-- Select --</option>
-        {testSuites.map(suite => (
+        {testSuites.map((suite) => (
           <option key={suite.id} value={suite.id}>
             {suite.name}
           </option>
@@ -73,7 +98,7 @@ export default function ComparePage() {
       <h3 style={{ marginTop: 20 }}>Model A</h3>
       <select value={modelA} onChange={(e) => setModelA(e.target.value)}>
         <option value="">-- Select --</option>
-        {AVAILABLE_MODELS.map(model => (
+        {AVAILABLE_MODELS.map((model) => (
           <option key={model} value={model}>
             {model}
           </option>
@@ -83,7 +108,7 @@ export default function ComparePage() {
       <h3 style={{ marginTop: 20 }}>Model B</h3>
       <select value={modelB} onChange={(e) => setModelB(e.target.value)}>
         <option value="">-- Select --</option>
-        {AVAILABLE_MODELS.map(model => (
+        {AVAILABLE_MODELS.map((model) => (
           <option key={model} value={model}>
             {model}
           </option>
