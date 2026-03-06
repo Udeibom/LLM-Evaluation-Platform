@@ -37,7 +37,7 @@ def run_comparison(
     db.refresh(comparison)
 
     # Run comparison in background
-    background_tasks.add_task(run_full_comparison, db, comparison)
+    background_tasks.add_task(run_full_comparison, comparison.id)
 
     return comparison
 

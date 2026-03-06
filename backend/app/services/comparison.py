@@ -50,3 +50,15 @@ def compare_experiments(db: Session, exp_a_id, exp_b_id):
             "win_rate_a": 0.0,
             "win_rate_b": 0.0,
         }
+
+    win_rate_a = wins_a / total
+    win_rate_b = wins_b / total
+
+    return {
+        "total_prompts": total,
+        "wins_a": wins_a,
+        "wins_b": wins_b,
+        "ties": ties,
+        "win_rate_a": win_rate_a,
+        "win_rate_b": win_rate_b,
+    }

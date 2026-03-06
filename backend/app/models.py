@@ -99,6 +99,8 @@ class Comparison(Base):
     model_a = Column(String)
     model_b = Column(String)
 
+    total_prompts = Column(Integer)
+
     experiment_a_id = Column(UUID(as_uuid=True), ForeignKey("experiments.id"), nullable=True)
     experiment_b_id = Column(UUID(as_uuid=True), ForeignKey("experiments.id"), nullable=True)
 
