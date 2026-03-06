@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Boolean, Integer, JSON
+from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Boolean, Integer, JSON, Float
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -110,7 +110,7 @@ class Comparison(Base):
     wins_b = Column(Integer)
     ties = Column(Integer)
 
-    win_rate_a = Column(Integer)
-    win_rate_b = Column(Integer)
+    win_rate_a = Column(Float)
+    win_rate_b = Column(Float)
 
     created_at = Column(DateTime, default=datetime.utcnow)
