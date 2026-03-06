@@ -9,8 +9,8 @@ type TestSuite = {
 
 const AVAILABLE_MODELS = [
   "llama-3.3-70b-versatile",
-  "google/flan-t5-base",
-  "mistralai/Mistral-7B-Instruct-v0.2"
+  "mixtral-8x7b-32768",
+  "llama3-8b-8192"
 ];
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -22,6 +22,7 @@ export default function ComparePage() {
   const [modelB, setModelB] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const [jobStatus, setJobStatus] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadSuites() {
@@ -51,6 +52,7 @@ export default function ComparePage() {
     try {
       setLoading(true);
       setResult(null);
+      setJobStatus("starting");
 
       const res = await fetch(`${API_URL}/comparisons/run`, {
         method: "POST",
@@ -68,8 +70,24 @@ export default function ComparePage() {
         throw new Error("Comparison failed");
       }
 
-      const data = await res.json();
-      setResult(data);
+      const job = await res.json();
+
+      // Poll the job status
+      let finished = false;
+
+      while (!finished) {
+        const statusRes = await fetch(`${API_URL}/comparisons/${job.id}`);
+        const data = await statusRes.json();
+
+        setJobStatus(data.status);
+
+        if (data.status === "completed") {
+          setResult(data);
+          finished = true;
+        } else {
+          await new Promise((r) => setTimeout(r, 2000));
+        }
+      }
     } catch (error) {
       console.error("Comparison error:", error);
       alert("Failed to run comparison.");
@@ -121,15 +139,30 @@ export default function ComparePage() {
         </button>
       </div>
 
+      {loading && (
+        <div style={{ marginTop: 20 }}>
+          <p>Job Status: {jobStatus || "starting..."}</p>
+        </div>
+      )}
+
       {result && (
         <div style={{ marginTop: 40 }}>
           <h2>Results</h2>
-          <p>Total Prompts: {result.total_prompts}</p>
-          <p>Wins A: {result.wins_a}</p>
-          <p>Wins B: {result.wins_b}</p>
-          <p>Ties: {result.ties}</p>
-          <p>Win Rate A: {(result.win_rate_a * 100).toFixed(1)}%</p>
-          <p>Win Rate B: {(result.win_rate_b * 100).toFixed(1)}%</p>
+
+          <p><b>Total Prompts:</b> {result.total_prompts}</p>
+          <p><b>Model A Wins:</b> {result.wins_a}</p>
+          <p><b>Model B Wins:</b> {result.wins_b}</p>
+          <p><b>Ties:</b> {result.ties}</p>
+
+          <p>
+            <b>Win Rate A:</b>{" "}
+            {(result.win_rate_a * 100).toFixed(1)}%
+          </p>
+
+          <p>
+            <b>Win Rate B:</b>{" "}
+            {(result.win_rate_b * 100).toFixed(1)}%
+          </p>
         </div>
       )}
     </div>
