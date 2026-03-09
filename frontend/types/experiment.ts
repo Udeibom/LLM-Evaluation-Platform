@@ -29,4 +29,7 @@ export interface ExperimentSummary {
   started_at: string | null;
   completed_at: string | null;
   duration_ms: number | null;
+
+  model?: string;
+  samples?: number;
 }

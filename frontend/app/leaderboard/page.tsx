@@ -1,8 +1,8 @@
-import { getAllExperimentSummaries } from "@/lib/api";
+import { getLeaderboard } from "@/lib/api";
 import { ExperimentSummary } from "@/types/experiment";
 
 export default async function LeaderboardPage() {
-  const experiments: ExperimentSummary[] = await getAllExperimentSummaries();
+  const experiments: ExperimentSummary[] = await getLeaderboard();
 
   const sorted = [...experiments].sort(
     (a, b) => b.mean_score - a.mean_score
@@ -23,9 +23,9 @@ export default async function LeaderboardPage() {
         </thead>
 
         <tbody>
-          {sorted.map((exp) => (
-            <tr key={exp.experiment_id} className="border-b">
-              <td className="p-2">{exp.model_name}</td>
+          {sorted.map((exp, index) => (
+            <tr key={index} className="border-b">
+              <td className="p-2">{exp.model}</td>
               <td className="p-2">{exp.mean_score.toFixed(2)}</td>
               <td className="p-2">
                 {(exp.hallucination_rate * 100).toFixed(1)}%
