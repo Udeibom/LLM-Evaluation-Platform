@@ -1,0 +1,36 @@
+{
+  "dataset": "instructions",
+  "version": "v1",
+  "prompts": [
+    {
+      "id": "inst_001",
+      "question": "Summarize this sentence: Artificial intelligence is transforming industries by automating tasks and improving decision making.",
+      "reference_answer": "AI is transforming industries by automating tasks and improving decisions.",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_002",
+      "question": "Rewrite this sentence in a polite tone: Send me the report now.",
+      "reference_answer": "Could you please send me the report?",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_003",
+      "question": "Convert this list into bullet points: apples, oranges, bananas.",
+      "reference_answer": "- apples\n- oranges\n- bananas",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_004",
+      "question": "Rewrite this sentence in simpler language: The precipitation will commence shortly.",
+      "reference_answer": "It will start raining soon.",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_005",
+      "question": "Format this as JSON: name John age 25",
+      "reference_answer": "{\"name\": \"John\", \"age\": 25}",
+      "category": "instruction"
+    }
+  ]
+}

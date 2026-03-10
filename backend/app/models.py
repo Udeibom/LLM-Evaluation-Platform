@@ -25,6 +25,8 @@ class Prompt(Base):
     input_text = Column(Text, nullable=False)
     expected_output = Column(Text)
 
+    dataset_version = Column(String, default="v1")
+
     metadata_ = Column("metadata", JSON, default=dict)
 
     created_at = Column(DateTime, default=datetime.utcnow)

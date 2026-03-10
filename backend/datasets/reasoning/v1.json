@@ -1,0 +1,36 @@
+{
+  "dataset": "reasoning",
+  "version": "v1",
+  "prompts": [
+    {
+      "id": "reason_001",
+      "question": "If a train travels 60 km in 1 hour, how far will it travel in 3 hours?",
+      "reference_answer": "180 km",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_002",
+      "question": "John has 5 apples and gives 2 to Mary. How many apples does John have left?",
+      "reference_answer": "3",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_003",
+      "question": "If all roses are flowers and some flowers fade quickly, can we conclude that some roses fade quickly?",
+      "reference_answer": "No",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_004",
+      "question": "A rectangle has length 10 and width 5. What is its area?",
+      "reference_answer": "50",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_005",
+      "question": "If today is Monday, what day will it be in 10 days?",
+      "reference_answer": "Thursday",
+      "category": "reasoning"
+    }
+  ]
+}
