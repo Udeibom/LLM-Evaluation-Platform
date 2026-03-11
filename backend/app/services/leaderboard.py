@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, case, Integer
 
 from app import models
 
@@ -13,7 +13,7 @@ def get_leaderboard(db: Session):
             func.avg(models.Evaluation.score).label("mean_score"),
 
             func.avg(
-                func.cast(models.Evaluation.hallucination, func.Integer)
+                func.cast(models.Evaluation.hallucination, Integer)
             ).label("hallucination_rate"),
 
             func.avg(models.Output.latency_ms).label("avg_latency"),
@@ -21,7 +21,7 @@ def get_leaderboard(db: Session):
             func.count(models.Evaluation.id).label("samples"),
 
             func.avg(
-                func.case(
+                case(
                     (models.Evaluation.score >= 4, 1),
                     else_=0
                 )
@@ -36,7 +36,6 @@ def get_leaderboard(db: Session):
     leaderboard = []
 
     for row in results:
-
         leaderboard.append({
             "model": row.model,
             "mean_score": float(row.mean_score or 0),
