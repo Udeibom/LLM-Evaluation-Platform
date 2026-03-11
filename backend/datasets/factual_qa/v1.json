@@ -10,26 +10,86 @@
     },
     {
       "id": "qa_002",
+      "question": "What is the capital of Germany?",
+      "reference_answer": "Berlin",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_003",
+      "question": "What is the capital of Italy?",
+      "reference_answer": "Rome",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_004",
+      "question": "What is the capital of Spain?",
+      "reference_answer": "Madrid",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_005",
+      "question": "What is the capital of Japan?",
+      "reference_answer": "Tokyo",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_006",
+      "question": "What is the capital of Canada?",
+      "reference_answer": "Ottawa",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_007",
+      "question": "What is the capital of Brazil?",
+      "reference_answer": "Brasilia",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_008",
+      "question": "What is the capital of Australia?",
+      "reference_answer": "Canberra",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_009",
+      "question": "What is the capital of India?",
+      "reference_answer": "New Delhi",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_010",
+      "question": "What is the capital of Egypt?",
+      "reference_answer": "Cairo",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_011",
       "question": "Who discovered penicillin?",
       "reference_answer": "Alexander Fleming",
       "category": "factual_qa"
     },
     {
-      "id": "qa_003",
-      "question": "What planet is known as the Red Planet?",
-      "reference_answer": "Mars",
+      "id": "qa_012",
+      "question": "Who discovered gravity?",
+      "reference_answer": "Isaac Newton",
       "category": "factual_qa"
     },
     {
-      "id": "qa_004",
-      "question": "What is the largest ocean on Earth?",
-      "reference_answer": "Pacific Ocean",
+      "id": "qa_013",
+      "question": "Who discovered relativity?",
+      "reference_answer": "Albert Einstein",
       "category": "factual_qa"
     },
     {
-      "id": "qa_005",
-      "question": "Who wrote Romeo and Juliet?",
-      "reference_answer": "William Shakespeare",
+      "id": "qa_014",
+      "question": "Who discovered radioactivity?",
+      "reference_answer": "Marie Curie",
+      "category": "factual_qa"
+    },
+    {
+      "id": "qa_015",
+      "question": "Who discovered evolution?",
+      "reference_answer": "Charles Darwin",
       "category": "factual_qa"
     }
   ]

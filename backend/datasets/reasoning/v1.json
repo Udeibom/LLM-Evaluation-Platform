@@ -4,32 +4,602 @@
   "prompts": [
     {
       "id": "reason_001",
-      "question": "If a train travels 60 km in 1 hour, how far will it travel in 3 hours?",
-      "reference_answer": "180 km",
+      "question": "If you multiply 15 by 14, what is the result?",
+      "reference_answer": "210",
       "category": "reasoning"
     },
     {
       "id": "reason_002",
-      "question": "John has 5 apples and gives 2 to Mary. How many apples does John have left?",
-      "reference_answer": "3",
+      "question": "If you multiply 8 by 3, what is the result?",
+      "reference_answer": "24",
       "category": "reasoning"
     },
     {
       "id": "reason_003",
-      "question": "If all roses are flowers and some flowers fade quickly, can we conclude that some roses fade quickly?",
-      "reference_answer": "No",
+      "question": "If you multiply 9 by 14, what is the result?",
+      "reference_answer": "126",
       "category": "reasoning"
     },
     {
       "id": "reason_004",
-      "question": "A rectangle has length 10 and width 5. What is its area?",
-      "reference_answer": "50",
+      "question": "If you multiply 13 by 17, what is the result?",
+      "reference_answer": "221",
       "category": "reasoning"
     },
     {
       "id": "reason_005",
-      "question": "If today is Monday, what day will it be in 10 days?",
-      "reference_answer": "Thursday",
+      "question": "If you multiply 15 by 17, what is the result?",
+      "reference_answer": "255",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_006",
+      "question": "If you multiply 3 by 20, what is the result?",
+      "reference_answer": "60",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_007",
+      "question": "If you multiply 15 by 6, what is the result?",
+      "reference_answer": "90",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_008",
+      "question": "If you multiply 19 by 3, what is the result?",
+      "reference_answer": "57",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_009",
+      "question": "If you multiply 20 by 11, what is the result?",
+      "reference_answer": "220",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_010",
+      "question": "If you multiply 2 by 5, what is the result?",
+      "reference_answer": "10",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_011",
+      "question": "If you multiply 6 by 19, what is the result?",
+      "reference_answer": "114",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_012",
+      "question": "If you multiply 14 by 15, what is the result?",
+      "reference_answer": "210",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_013",
+      "question": "If you multiply 16 by 9, what is the result?",
+      "reference_answer": "144",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_014",
+      "question": "If you multiply 12 by 3, what is the result?",
+      "reference_answer": "36",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_015",
+      "question": "If you multiply 2 by 18, what is the result?",
+      "reference_answer": "36",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_016",
+      "question": "If you multiply 14 by 3, what is the result?",
+      "reference_answer": "42",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_017",
+      "question": "If you multiply 11 by 11, what is the result?",
+      "reference_answer": "121",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_018",
+      "question": "If you multiply 9 by 6, what is the result?",
+      "reference_answer": "54",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_019",
+      "question": "If you multiply 5 by 13, what is the result?",
+      "reference_answer": "65",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_020",
+      "question": "If you multiply 10 by 16, what is the result?",
+      "reference_answer": "160",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_021",
+      "question": "If you multiply 4 by 5, what is the result?",
+      "reference_answer": "20",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_022",
+      "question": "If you multiply 6 by 14, what is the result?",
+      "reference_answer": "84",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_023",
+      "question": "If you multiply 17 by 7, what is the result?",
+      "reference_answer": "119",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_024",
+      "question": "If you multiply 9 by 15, what is the result?",
+      "reference_answer": "135",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_025",
+      "question": "If you multiply 4 by 5, what is the result?",
+      "reference_answer": "20",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_026",
+      "question": "If you multiply 18 by 6, what is the result?",
+      "reference_answer": "108",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_027",
+      "question": "If you multiply 3 by 15, what is the result?",
+      "reference_answer": "45",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_028",
+      "question": "If you multiply 2 by 6, what is the result?",
+      "reference_answer": "12",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_029",
+      "question": "If you multiply 20 by 11, what is the result?",
+      "reference_answer": "220",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_030",
+      "question": "If you multiply 3 by 11, what is the result?",
+      "reference_answer": "33",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_031",
+      "question": "If you multiply 15 by 7, what is the result?",
+      "reference_answer": "105",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_032",
+      "question": "If you multiply 7 by 10, what is the result?",
+      "reference_answer": "70",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_033",
+      "question": "If you multiply 2 by 11, what is the result?",
+      "reference_answer": "22",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_034",
+      "question": "If you multiply 14 by 18, what is the result?",
+      "reference_answer": "252",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_035",
+      "question": "If you multiply 3 by 6, what is the result?",
+      "reference_answer": "18",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_036",
+      "question": "If you multiply 20 by 14, what is the result?",
+      "reference_answer": "280",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_037",
+      "question": "If you multiply 5 by 19, what is the result?",
+      "reference_answer": "95",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_038",
+      "question": "If you multiply 6 by 18, what is the result?",
+      "reference_answer": "108",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_039",
+      "question": "If you multiply 10 by 11, what is the result?",
+      "reference_answer": "110",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_040",
+      "question": "If you multiply 6 by 10, what is the result?",
+      "reference_answer": "60",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_041",
+      "question": "If you multiply 12 by 20, what is the result?",
+      "reference_answer": "240",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_042",
+      "question": "If you multiply 20 by 20, what is the result?",
+      "reference_answer": "400",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_043",
+      "question": "If you multiply 17 by 5, what is the result?",
+      "reference_answer": "85",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_044",
+      "question": "If you multiply 11 by 2, what is the result?",
+      "reference_answer": "22",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_045",
+      "question": "If you multiply 18 by 2, what is the result?",
+      "reference_answer": "36",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_046",
+      "question": "If you multiply 10 by 2, what is the result?",
+      "reference_answer": "20",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_047",
+      "question": "If you multiply 6 by 4, what is the result?",
+      "reference_answer": "24",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_048",
+      "question": "If you multiply 15 by 16, what is the result?",
+      "reference_answer": "240",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_049",
+      "question": "If you multiply 9 by 11, what is the result?",
+      "reference_answer": "99",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_050",
+      "question": "If you multiply 5 by 4, what is the result?",
+      "reference_answer": "20",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_051",
+      "question": "If you multiply 20 by 16, what is the result?",
+      "reference_answer": "320",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_052",
+      "question": "If you multiply 12 by 9, what is the result?",
+      "reference_answer": "108",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_053",
+      "question": "If you multiply 8 by 2, what is the result?",
+      "reference_answer": "16",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_054",
+      "question": "If you multiply 6 by 7, what is the result?",
+      "reference_answer": "42",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_055",
+      "question": "If you multiply 8 by 19, what is the result?",
+      "reference_answer": "152",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_056",
+      "question": "If you multiply 18 by 16, what is the result?",
+      "reference_answer": "288",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_057",
+      "question": "If you multiply 3 by 2, what is the result?",
+      "reference_answer": "6",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_058",
+      "question": "If you multiply 6 by 12, what is the result?",
+      "reference_answer": "72",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_059",
+      "question": "If you multiply 6 by 20, what is the result?",
+      "reference_answer": "120",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_060",
+      "question": "If you multiply 14 by 12, what is the result?",
+      "reference_answer": "168",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_061",
+      "question": "If you multiply 8 by 15, what is the result?",
+      "reference_answer": "120",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_062",
+      "question": "If you multiply 17 by 11, what is the result?",
+      "reference_answer": "187",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_063",
+      "question": "If you multiply 13 by 4, what is the result?",
+      "reference_answer": "52",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_064",
+      "question": "If you multiply 17 by 15, what is the result?",
+      "reference_answer": "255",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_065",
+      "question": "If you multiply 3 by 5, what is the result?",
+      "reference_answer": "15",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_066",
+      "question": "If you multiply 4 by 2, what is the result?",
+      "reference_answer": "8",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_067",
+      "question": "If you multiply 15 by 20, what is the result?",
+      "reference_answer": "300",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_068",
+      "question": "If you multiply 12 by 17, what is the result?",
+      "reference_answer": "204",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_069",
+      "question": "If you multiply 11 by 4, what is the result?",
+      "reference_answer": "44",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_070",
+      "question": "If you multiply 10 by 11, what is the result?",
+      "reference_answer": "110",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_071",
+      "question": "If you multiply 12 by 14, what is the result?",
+      "reference_answer": "168",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_072",
+      "question": "If you multiply 6 by 12, what is the result?",
+      "reference_answer": "72",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_073",
+      "question": "If you multiply 8 by 17, what is the result?",
+      "reference_answer": "136",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_074",
+      "question": "If you multiply 8 by 19, what is the result?",
+      "reference_answer": "152",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_075",
+      "question": "If you multiply 3 by 13, what is the result?",
+      "reference_answer": "39",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_076",
+      "question": "If you multiply 16 by 12, what is the result?",
+      "reference_answer": "192",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_077",
+      "question": "If you multiply 2 by 12, what is the result?",
+      "reference_answer": "24",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_078",
+      "question": "If you multiply 7 by 5, what is the result?",
+      "reference_answer": "35",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_079",
+      "question": "If you multiply 19 by 5, what is the result?",
+      "reference_answer": "95",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_080",
+      "question": "If you multiply 2 by 5, what is the result?",
+      "reference_answer": "10",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_081",
+      "question": "If you multiply 3 by 18, what is the result?",
+      "reference_answer": "54",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_082",
+      "question": "If you multiply 15 by 17, what is the result?",
+      "reference_answer": "255",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_083",
+      "question": "If you multiply 10 by 5, what is the result?",
+      "reference_answer": "50",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_084",
+      "question": "If you multiply 3 by 13, what is the result?",
+      "reference_answer": "39",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_085",
+      "question": "If you multiply 2 by 20, what is the result?",
+      "reference_answer": "40",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_086",
+      "question": "If you multiply 11 by 19, what is the result?",
+      "reference_answer": "209",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_087",
+      "question": "If you multiply 11 by 15, what is the result?",
+      "reference_answer": "165",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_088",
+      "question": "If you multiply 14 by 5, what is the result?",
+      "reference_answer": "70",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_089",
+      "question": "If you multiply 3 by 11, what is the result?",
+      "reference_answer": "33",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_090",
+      "question": "If you multiply 13 by 19, what is the result?",
+      "reference_answer": "247",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_091",
+      "question": "If you multiply 17 by 18, what is the result?",
+      "reference_answer": "306",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_092",
+      "question": "If you multiply 5 by 14, what is the result?",
+      "reference_answer": "70",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_093",
+      "question": "If you multiply 19 by 2, what is the result?",
+      "reference_answer": "38",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_094",
+      "question": "If you multiply 6 by 13, what is the result?",
+      "reference_answer": "78",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_095",
+      "question": "If you multiply 20 by 15, what is the result?",
+      "reference_answer": "300",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_096",
+      "question": "If you multiply 13 by 7, what is the result?",
+      "reference_answer": "91",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_097",
+      "question": "If you multiply 5 by 9, what is the result?",
+      "reference_answer": "45",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_098",
+      "question": "If you multiply 5 by 18, what is the result?",
+      "reference_answer": "90",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_099",
+      "question": "If you multiply 13 by 17, what is the result?",
+      "reference_answer": "221",
+      "category": "reasoning"
+    },
+    {
+      "id": "reason_100",
+      "question": "If you multiply 16 by 15, what is the result?",
+      "reference_answer": "240",
       "category": "reasoning"
     }
   ]

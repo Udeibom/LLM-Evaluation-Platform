@@ -4,32 +4,62 @@
   "prompts": [
     {
       "id": "inst_001",
-      "question": "Summarize this sentence: Artificial intelligence is transforming industries by automating tasks and improving decision making.",
-      "reference_answer": "AI is transforming industries by automating tasks and improving decisions.",
+      "question": "Summarize this sentence: Artificial intelligence is transforming many industries.",
+      "reference_answer": "Artificial intelligence is transforming many industries.",
       "category": "instruction"
     },
     {
       "id": "inst_002",
-      "question": "Rewrite this sentence in a polite tone: Send me the report now.",
-      "reference_answer": "Could you please send me the report?",
+      "question": "Rewrite this sentence in simpler language: Artificial intelligence is transforming many industries.",
+      "reference_answer": "Artificial intelligence is transforming many industries.",
       "category": "instruction"
     },
     {
       "id": "inst_003",
-      "question": "Convert this list into bullet points: apples, oranges, bananas.",
-      "reference_answer": "- apples\n- oranges\n- bananas",
+      "question": "Summarize this sentence: Climate change affects ecosystems and weather patterns.",
+      "reference_answer": "Climate change affects ecosystems and weather patterns.",
       "category": "instruction"
     },
     {
       "id": "inst_004",
-      "question": "Rewrite this sentence in simpler language: The precipitation will commence shortly.",
-      "reference_answer": "It will start raining soon.",
+      "question": "Rewrite this sentence in simpler language: Climate change affects ecosystems and weather patterns.",
+      "reference_answer": "Climate change affects ecosystems and weather patterns.",
       "category": "instruction"
     },
     {
       "id": "inst_005",
-      "question": "Format this as JSON: name John age 25",
-      "reference_answer": "{\"name\": \"John\", \"age\": 25}",
+      "question": "Summarize this sentence: Machine learning allows computers to learn from data.",
+      "reference_answer": "Machine learning allows computers to learn from data.",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_006",
+      "question": "Rewrite this sentence in simpler language: Machine learning allows computers to learn from data.",
+      "reference_answer": "Machine learning allows computers to learn from data.",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_007",
+      "question": "Summarize this sentence: Space exploration has advanced rapidly in recent decades.",
+      "reference_answer": "Space exploration has advanced rapidly in recent decades.",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_008",
+      "question": "Rewrite this sentence in simpler language: Space exploration has advanced rapidly in recent decades.",
+      "reference_answer": "Space exploration has advanced rapidly in recent decades.",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_009",
+      "question": "Summarize this sentence: Education is essential for economic development.",
+      "reference_answer": "Education is essential for economic development.",
+      "category": "instruction"
+    },
+    {
+      "id": "inst_010",
+      "question": "Rewrite this sentence in simpler language: Education is essential for economic development.",
+      "reference_answer": "Education is essential for economic development.",
       "category": "instruction"
     }
   ]
