@@ -148,6 +148,7 @@ def evaluate_outputs(db: Session, experiment_id: int) -> None:
             score=score,
             hallucination=hallucination_flag,
             explanation=explanation,
+            judge_model=GROQ_JUDGE_MODEL
         )
 
         db.add(evaluation)
