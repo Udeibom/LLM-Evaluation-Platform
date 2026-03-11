@@ -123,6 +123,13 @@ def evaluate_outputs(db: Session, experiment_id: int) -> None:
         parsed = parse_judge_output(raw_response)
 
         score = parsed.get("score", 0)
+
+        # Validate score to ensure it's within the range of 0–5
+        if score < 0:
+            score = 0
+        if score > 5:
+            score = 5
+
         hallucination_flag = parsed.get("hallucination", True)
         explanation = parsed.get("explanation", "No explanation provided")
 
