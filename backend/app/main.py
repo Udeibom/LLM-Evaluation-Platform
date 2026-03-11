@@ -12,8 +12,7 @@ from app.routers import test_suites, prompts, experiments, comparisons, leaderbo
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup logic
-    Base.metadata.create_all(bind=engine)
-    print("Tables created")
+    print("App Startup")
 
     yield
 
