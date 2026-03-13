@@ -75,6 +75,9 @@ class Evaluation(Base):
     score = Column(Integer)
     hallucination = Column(Boolean)
     explanation = Column(Text)
+
+    judge_model = Column(String)
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     output = relationship("Output", back_populates="evaluations")
