@@ -1,9 +1,8 @@
-import { getAllExperimentSummaries } from "@/lib/api";
+import { getLeaderboard } from "@/lib/api";
 import { ExperimentSummary } from "@/types/experiment";
 
 export default async function ExperimentsPage() {
-  const experiments: ExperimentSummary[] =
-    await getAllExperimentSummaries();
+  const experiments: ExperimentSummary[] = await getLeaderboard();
 
   return (
     <div className="max-w-6xl mx-auto p-8">
