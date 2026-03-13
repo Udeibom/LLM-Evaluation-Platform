@@ -48,6 +48,8 @@ def call_model(model_name: str, prompt: str) -> tuple[str, int]:
         return output_text, latency
 
     except Exception as e:
+        # Added logging for debugging Groq errors
+        print("GROQ ERROR:", e)
         latency = int((time.time() - start) * 1000)
         return f"MODEL_ERROR: {str(e)}", latency
 
@@ -59,9 +61,7 @@ def run_single_prompt(experiment_id, model_name, prompt):
 
     output_text, latency = call_model(model_name, prompt.input_text)
 
-    if output_text.startswith("MODEL_ERROR"):
-        return None
-
+    # Always return an Output object (even if the model failed)
     return models.Output(
         experiment_id=experiment_id,
         prompt_id=prompt.id,
@@ -101,6 +101,10 @@ def run_experiment(db: Session, experiment: models.Experiment) -> None:
 
             if result:
                 outputs.append(result)
+
+    # Safety check so silent failures don't pass unnoticed
+    if not outputs:
+        raise RuntimeError("Experiment produced zero outputs")
 
     db.add_all(outputs)
     db.commit()
