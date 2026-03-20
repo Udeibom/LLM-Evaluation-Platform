@@ -18,18 +18,36 @@ export default async function ExperimentsPage() {
               {exp.model_name}
             </h2>
 
-            <p>Status: {exp.status}</p>
-            <p>Samples: {exp.num_samples}</p>
+            <p>Status: {exp.status ?? "N/A"}</p>
+            <p>Samples: {exp.num_samples ?? "N/A"}</p>
 
             <div className="mt-4 space-y-1">
-              <p>Mean Score: {exp.mean_score.toFixed(2)}</p>
-              <p>Std Dev: {exp.std_dev.toFixed(2)}</p>
+              <p>
+                Mean Score:{" "}
+                {typeof exp.mean_score === "number"
+                  ? exp.mean_score.toFixed(2)
+                  : "N/A"}
+              </p>
+
+              <p>
+                Std Dev:{" "}
+                {typeof exp.std_dev === "number"
+                  ? exp.std_dev.toFixed(2)
+                  : "N/A"}
+              </p>
+
               <p>
                 Hallucination Rate:{" "}
-                {(exp.hallucination_rate * 100).toFixed(1)}%
+                {typeof exp.hallucination_rate === "number"
+                  ? (exp.hallucination_rate * 100).toFixed(1) + "%"
+                  : "N/A"}
               </p>
+
               <p>
-                Avg Latency: {exp.avg_latency.toFixed(0)} ms
+                Avg Latency:{" "}
+                {typeof exp.avg_latency === "number"
+                  ? exp.avg_latency.toFixed(0) + " ms"
+                  : "N/A"}
               </p>
             </div>
           </div>
