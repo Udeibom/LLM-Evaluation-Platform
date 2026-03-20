@@ -75,23 +75,13 @@ GET    /leaderboard
 | mixtral-8x7b-32768       | 0.31      | 0.0%               | 58 ms       | -        |
 | llama3-8b-8192           | 0.31      | 0.0%               | 69 ms       | -        |
 
----
-
-## 📸 Screenshots
-
-### Leaderboard
-![Leaderboard](./assets/leaderboard.png)
-
-### Model Comparison
-![Model Comparison](./assets/run_comparison.png)
 
 ---
 
 ## ⚙️ Getting Started
 
 ### 1. Clone the repo
-git clone https://github.com/your-username/llm-eval-platform.git  
-cd llm-eval-platform  
+git clone https://github.com/Udeibom/LLM-Eval-Platform.git  
 
 ### 2. Create virtual environment
 python -m venv venv  
